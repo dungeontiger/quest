@@ -1,5 +1,6 @@
 {
 	"host": "quests.kingtigerbooks.com",
 	"user": "quest_author",
-	"password": "Scotland#3"
+	"password": "Scotland#3",
+	"database": "quest_tree"
 }

@@ -1,3 +1,14 @@
 {
-	"name" : "quest_relationships"
+	"name" : "quest_relationships",
+		"fields" : [{
+			"name" : "questRelationshipId",
+			"type" : "INTEGER"
+		}, {
+			"name": "questId",
+			"type": "INTEGER"
+		}, {
+			"name": "parentQuestId",
+			"type": "INTEGER"
+		}
+	]
 }

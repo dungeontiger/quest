@@ -13,49 +13,27 @@ debugMsg('*** start parallel');
 async.parallel([
 	connect,
 	loadTableDefinitions
-	]
-, function(err, results) {next()});
+	], connectReady
+);
 
-function next() {
-	debugMsg('*** next');
+//
+// async completion functions
+//
+function connectReady(err) {
+	if (err) throw err;
 	async.series([
-		createTables,
-		disconnect
-	], debugMsg('*** series next finished'));
+		createTables
+	], done);
 }
 
-// create the tables
-function createTables() {
-	debugMsg('*** createTables');
-	var tasks = [];
-	db.tables.forEach(function(table){
-		var dropSQL = 'DROP TABLE IF EXISTS ' + table.name;
-		tasks.push(function(){
-			// in series, need to drop the table and create the table
-			async.series([
-					db.connection.query(dropSQL, function(err, rows, fields){
-						debugMsg('*** drop table done');
-						createTableHandler(null);
-					}),
-					function(createTableHandler) {
-						debugMsg('Create table ' + table.name);
-						createTableHandler(null);
-					}
-				]
-			);
-		});
-	});
-	async.parallel(tasks, createTableHandler(null, 'parallel'));
+function done(err) {
+	if (err) throw err;
+	disconnect();
 }
 
-// disconnect from the database when everything is done
-function disconnect() {
-	debugMsg('*** disconnect');
-	db.connection.end(function (err) {
-		if (err) throw err;
-		debugMsg('disconnected from database');
-	});
-}
+//
+// task functions
+//
 
 // connect to the database and set the global connection object
 function connect(callback) {
@@ -87,14 +65,82 @@ function loadTableDefinitions(callback) {
 	callback();
 }
 
-function createTableHandler(err, results) {
-	if (results) {
-		debugMsg('*** createHandler ' + results);
-	} else {
-		debugMsg('*** createTableHandler');
-	}
-	if (err) throw err;
+// create the tables
+function createTables(callback) {
+	// callback is the task callback
+	// this needs to be called when the 'createTables' task is done
+	// this is the case when all the parallel create table tasks are complete
+	var tasks = [];
+	
+	// populate the tasks array 
+	db.tables.forEach(function(table){
+		// callback2 is used to signal that the individual table creation task is complete
+		tasks.push(function(callback2) {
+			// need to execute a drop table and create table in series
+			// callback3 signals that the drop is done and then that the create is done
+			async.series([
+				function(callback3){
+					dropTable(table);
+					callback3();
+				},
+				function(callback3){
+					createTable(table);
+					callback3();
+				}
+			], function(err) {callback2()});
+		});
+	});
+	
+	async.parallel(tasks, function(err) {
+		// signal that the createTables task is done
+		callback(err);
+	});
 }
+
+// 
+// other methods
+//
+
+// disconnect from the database when everything is done
+function disconnect() {
+	debugMsg('*** disconnect');
+	db.connection.end(function (err) {
+		if (err) throw err;
+		debugMsg('disconnected from database');
+	});
+}
+
+//
+// drop a table
+//
+function dropTable(table) {
+	var sql = 'DROP TABLE IF EXISTS ' + table.name;
+	debugMsg(sql);
+	db.connection.query(sql, function(err){if (err) throw err;});
+}
+
+//
+// create a table
+//
+function createTable(table) {
+	var sql = 'CREATE TABLE ' + table.name + ' (';
+	for (var i = 0; i < table.fields.length; i++) {
+		sql += table.fields[i].name + ' ' + table.fields[i].type;
+		if (i < (table.fields.length - 1)) {
+			sql += ', ';
+		}
+	}
+	sql += ')';
+	if (db.fields.field[i].attributes) {
+		
+	}
+	debugMsg(sql);
+	db.connection.query(sql, function(err){if (err) throw err;});
+}
+
+//
+// debug utilities
+//
 
 function debugMsg(msg) {
 	if (debug) {
