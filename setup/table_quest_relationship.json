@@ -1,0 +1,27 @@
+{
+    "name": "quest_relationships",
+    "fields": [
+        {
+            "name": "questRelationshipId",
+            "type": "INT",
+            "attributes": [
+                "AUTO_INCREMENT",
+                "KEY"
+            ]
+        },
+        {
+            "name": "questId",
+            "type": "INT",
+            "attributes": [
+                "NOT NULL"
+            ]
+        },
+        {
+            "name": "parentQuestId",
+            "type": "INT",
+            "attributes": [
+                "NOT NULL"
+            ]
+        }
+    ]
+}

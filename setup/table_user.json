@@ -1,0 +1,29 @@
+{
+    "name": "user",
+    "fields": [
+        {
+            "name": "userId",
+            "type": "INT",
+            "attributes": [
+                "AUTO_INCREMENT",
+                "KEY"
+            ]
+        },
+        {
+            "name": "name",
+            "type": "VARCHAR(100)"
+        },
+        {
+            "name": "email",
+            "type": "VARCHAR(100)"
+        },
+		{
+			"name": "password",
+			"type": "VARCHAR(100)"
+		},
+		{
+			"name": "salt",
+			"type": "VARCHAR(100)"
+		}
+    ]
+}

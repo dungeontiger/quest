@@ -125,15 +125,19 @@ function dropTable(table) {
 function createTable(table) {
 	var sql = 'CREATE TABLE ' + table.name + ' (';
 	for (var i = 0; i < table.fields.length; i++) {
-		sql += table.fields[i].name + ' ' + table.fields[i].type;
+		var field = table.fields[i];
+		sql += field.name + ' ' + field.type;
+		if (field.attributes) {
+			sql += ' ';
+			for (var j = 0; j < field.attributes.length; j++) {
+				sql += field.attributes[j] + ' ';
+			}
+		}
 		if (i < (table.fields.length - 1)) {
 			sql += ', ';
 		}
 	}
 	sql += ')';
-	if (db.fields.field[i].attributes) {
-		
-	}
 	debugMsg(sql);
 	db.connection.query(sql, function(err){if (err) throw err;});
 }

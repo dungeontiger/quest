@@ -1,0 +1,31 @@
+{
+    "name": "quest",
+    "fields": [
+        {
+            "name": "questId",
+            "type": "INT",
+            "attributes": [
+                "AUTO_INCREMENT",
+                "KEY"
+            ]
+        },
+        {
+            "name": "description",
+            "type": "VARCHAR(150)"
+        },
+        {
+            "name": "createdOn",
+            "type": "DATE",
+            "attributes": [
+                "NOT NULL"
+            ]
+        },
+        {
+            "name": "lastModifiedOn",
+            "type": "DATE",
+            "attributes": [
+                "NOT NULL"
+            ]
+        }
+    ]
+}
