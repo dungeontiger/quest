@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		block header
+			.header
+				a(href="/") Home
+				|&nbsp;
+				a(href="login") Log In
+		.content
+			block content
+		block footer
+			.footer
+				|Stephen D. Gibson &copy; 2015
+				div All Rights Reserved

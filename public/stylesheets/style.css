@@ -1,0 +1,48 @@
+body {
+  font: 12pt "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.footer {
+	border-top: solid 1px gray;
+	color: gray;
+	width: 100%;
+	text-align: right;
+	font-size: 8pt;
+	padding-top: 2px
+}
+
+.header {
+	border-bottom: solid 1px gray;
+	color: gray;
+	width: 100%;	
+	text-align: right;
+	font-size: 10pt;
+	padding-bottom: 2px;
+}
+
+.content {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.title {
+	font-size: 16pt;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+a:link {
+	color:blue;
+}
+
+a:hover {
+	color:red;
+}
+
+a:active {
+	color:darkred;
+}
+
+.stackedInput {
+	padding-top: 2px
+}

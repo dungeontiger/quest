@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	.title Sign Up
+	form#signup(name="signup", method="post", action="/doSignup")
+		.stackedInput
+			input(type="text",placeholder="User Name" name="userName") 
+		.stackedInput
+			input(type="text",placeholder="First Name" name="firstName")
+		.stackedInput
+			input(type="text",placeholder="Last Name" name="lastName")
+		.stackecInput
+			input(type="text",placeholder="Email" name="email")
+		.stackedInput
+			input(type="password",placeholder="Password" name="password")
+		.stackedInput
+			input(type="password",placeholder="Verify Password")
+		.stackedInput
+			button(type="submit") Sign Up
